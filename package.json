@@ -1,0 +1,33 @@
+{
+  "name": "ima-plugin-halson-rest-client",
+  "version": "0.0.0",
+  "description": "HAL+JSON REST API client for IMA applications.",
+  "author": "Martin Jurča <martin.jurca@firma.seznam.cz>",
+  "main": "index.js",
+  "homepage": "https://github.com/jurca/IMA-plugin-halson-rest-client#readme",
+  "keywords": [
+    "ima",
+    "ima.js",
+    "rest",
+    "hal",
+    "json",
+    "halson",
+    "plugin"
+  ],
+  "license": "ISC",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jurca/IMA-plugin-halson-rest-client.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jurca/IMA-plugin-halson-rest-client/issues"
+  },
+  "dependencies": {
+    "halson": "^2.3.1",
+    "ima-plugin-rest-client": "git+http://git@github.com/jurca/IMA-plugin-rest-client.git#e1b8def"
+  },
+  "devDependencies": {},
+}
