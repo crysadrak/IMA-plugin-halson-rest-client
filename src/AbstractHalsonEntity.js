@@ -29,7 +29,7 @@ export default class AbstractHalsonEntity {
 		return false;
 	}
 
-	get parentResource() {
+	get parentEntity() {
 		return null;
 	}
 	

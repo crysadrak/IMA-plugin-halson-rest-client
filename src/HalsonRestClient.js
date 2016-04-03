@@ -16,13 +16,13 @@ export default class HalsonRestClient extends AbstractRestClient {
 		);
 	}
 
-	list(resource, parameters = {}, options = {}) {
+	list(resource, parameters = {}, options = {}, parentEntity = null) {
 		return super.list(resource, parameters, options).then((response) => {
 			return this._finalizeRequestResult(response);
 		})
 	}
 
-	get(resource, id, parameters = {}, options = {}) {
+	get(resource, id, parameters = {}, options = {}, parentEntity = null) {
 		return super.get(
 			resource,
 			id,
@@ -33,25 +33,25 @@ export default class HalsonRestClient extends AbstractRestClient {
 		});
 	}
 
-	patch(resource, id, data, options = {}) {
+	patch(resource, id, data, options = {}, parentEntity = null) {
 		return super.patch(resource, id, data, options).then((response) => {
 			return this._finalizeRequestResult(response);
 		});
 	}
 
-	replace(resource, id, data, options = {}) {
+	replace(resource, id, data, options = {}, parentEntity = null) {
 		return super.replace(resource, id, data, options).then((response) => {
 			return this._finalizeRequestResult(response);
 		});
 	}
 
-	create(resource, data, options = {}) {
+	create(resource, data, options = {}, parentEntity = null) {
 		return super.replace(resource, data, options).then((response) => {
 			return this._finalizeRequestResult(response);
 		});
 	}
 
-	delete(resource, id, options = {}) {
+	delete(resource, id, options = {}, parentEntity = null) {
 		return super.delete(resource, id, options).then((response) => {
 			return this._finalizeRequestResult(response);
 		});

@@ -4,12 +4,12 @@ import LinkGenerator from 'ima-plugin-rest-client/src/LinkGenerator';
 const QUERY_PARAMETER_SEPARATOR = '&'; // the RFC allows & and ;
 
 export default class HalsonLinkGenerator extends LinkGenerator {
-	createLink(resource, id, parameters, serverConfiguration) {
+	createLink(parentEntity, resource, id, parameters, serverConfiguration) {
 		let linkName = resource.resourceName;
 		let idParameterName = resource.idParameterName;
 
 		let links = serverConfiguration.links;
-		// TODO: handle resourceEntity.parentResource
+		// TODO: handle parentEntity
 
 		if (!serverConfiguration.links[linkName]) {
 			return this._createGenericLink(
