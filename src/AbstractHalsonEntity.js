@@ -17,8 +17,11 @@ export default class AbstractHalsonEntity {
 	}
 
 	static get idParameterName() {
-		throw new Error('The idParameterName getter is abstract and must be ' +
-				'overridden');
+		return 'id';
+	}
+	
+	static getIdFieldName() {
+		return 'id';
 	}
 	
 	static get inlineEmbeds() {

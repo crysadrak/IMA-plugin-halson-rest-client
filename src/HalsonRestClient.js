@@ -17,7 +17,12 @@ export default class HalsonRestClient extends AbstractRestClient {
 	}
 
 	list(resource, parameters = {}, options = {}, parentEntity = null) {
-		return super.list(resource, parameters, options).then((response) => {
+		return super.list(
+			resource,
+			parameters,
+			options,
+			parentEntity
+		).then((response) => {
 			return this._finalizeRequestResult(response);
 		})
 	}
@@ -27,32 +32,55 @@ export default class HalsonRestClient extends AbstractRestClient {
 			resource,
 			id,
 			parameters,
-			options
+			options,
+			parentEntity
 		).then((response) => {
 			return this._finalizeRequestResult(response);
 		});
 	}
 
 	patch(resource, id, data, options = {}, parentEntity = null) {
-		return super.patch(resource, id, data, options).then((response) => {
+		return super.patch(
+			resource,
+			id,
+			data,
+			options,
+			parentEntity
+		).then((response) => {
 			return this._finalizeRequestResult(response);
 		});
 	}
 
 	replace(resource, id, data, options = {}, parentEntity = null) {
-		return super.replace(resource, id, data, options).then((response) => {
+		return super.replace(
+			resource,
+			id,
+			data,
+			options,
+			parentEntity
+		).then((response) => {
 			return this._finalizeRequestResult(response);
 		});
 	}
 
 	create(resource, data, options = {}, parentEntity = null) {
-		return super.replace(resource, data, options).then((response) => {
+		return super.create(
+			resource,
+			data,
+			options,
+			parentEntity
+		).then((response) => {
 			return this._finalizeRequestResult(response);
 		});
 	}
 
 	delete(resource, id, options = {}, parentEntity = null) {
-		return super.delete(resource, id, options).then((response) => {
+		return super.delete(
+			resource,
+			id,
+			options,
+			parentEntity
+		).then((response) => {
 			return this._finalizeRequestResult(response);
 		});
 	}

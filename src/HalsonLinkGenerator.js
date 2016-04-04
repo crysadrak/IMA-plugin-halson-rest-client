@@ -8,11 +8,16 @@ export default class HalsonLinkGenerator extends LinkGenerator {
 		let linkName = resource.resourceName;
 		let idParameterName = resource.idParameterName;
 
-		let links = serverConfiguration.links;
-		// TODO: handle parentEntity
+		let links;
+		if (parentEntity) {
+			links = parentEntity._links;
+		} else {
+			links = serverConfiguration.links;
+		}
 
-		if (!serverConfiguration.links[linkName]) {
+		if (!links[linkName]) {
 			return this._createGenericLink(
+				parentEntity,
 				linkName,
 				id,
 				parameters,
@@ -20,7 +25,7 @@ export default class HalsonLinkGenerator extends LinkGenerator {
 			);
 		}
 		
-		let linkTemplate = serverConfiguration.links[linkName];
+		let linkTemplate = links[linkName];
 		if (linkTemplate.href) {
 			linkTemplate = linkTemplate.href;
 		}
@@ -54,23 +59,13 @@ export default class HalsonLinkGenerator extends LinkGenerator {
 		
 		if (Object.keys(unusedParameters).length) {
 			link += (link.indexOf('?') > -1 ? QUERY_PARAMETER_SEPARATOR : '?');
-			link += this._encodeToQuery(unusedParameters);
+			link += LinkGenerator.encodeQuery(unusedParameters);
 		}
 		
 		return link;
 	}
-	
-	_encodeToQuery(parameters) {
-		let pairs = [];
-		for (let key of Object.keys(parameters)) {
-			let value = parameters[key];
-			let pair = [key, value].map(encodeURIComponent).join('=');
-			pairs.push(pair);
-		}
-		return pairs.join(QUERY_PARAMETER_SEPARATOR);
-	}
 
-	_createGenericLink(linkName, id, parameters, apiRoot) {
+	_createGenericLink(parentEntity, linkName, id, parameters, apiRoot) {
 		if ($Debug) {
 			console.warn(`Attempted to access the ${linkName} resource ` +
 					'which is not defined in the links map provided by ' +
@@ -78,10 +73,20 @@ export default class HalsonLinkGenerator extends LinkGenerator {
 					'will be used instead.');
 		}
 
-		let link = `${apiRoot}/${linkName}`;
+		let link = `${linkName}`;
 		if (id) {
 			link += `/${id}`;
 		}
-		return `${link}?${this._encodeToQuery(parameters)}`;
+		
+		while (parentEntity) {
+			let parentResource = parentEntity.constructor;
+			let idFieldName = parentResource.getIdFieldName;
+			let id = parentEntity[idFieldName];
+			link = `${parentResource.resourceName}/${id}/${link}`;
+		}
+		
+		link = `${apiRoot}/${link}`;
+		
+		return `${link}?${LinkGenerator.encodeQuery(parameters)}`;
 	}
 }
