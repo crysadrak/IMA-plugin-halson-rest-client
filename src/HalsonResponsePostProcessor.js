@@ -16,32 +16,34 @@ export default class HalsonResponsePostProcessor
 	 * @override
 	 */
 	process(response) {
-		let processedBody = halson(response.body);
+		let processedBody;
+		if (response.body instanceof Array) {
+			processedBody = response.body.map(entity => halson(entity));
+		} else {
+			processedBody = halson(response.body);
+		}
 		let resource = response.request.resource;
 		
-		if (resource.inlineEmbeds) {
-			let embedNames = resource.inlineEmbeds;
+		let embedNames = resource.inlineEmbeds;
+		if (embedNames) {
 			for (let embedName of embedNames) {
 				let fieldName = embedName;
 				if (fieldName.indexOf(':') > -1) {
-					fieldName = fieldName.substring(
-						fieldName.lastIndexOf(':') + 1
-					);
+					let fieldNameStartIndex = fieldName.lastIndexOf(':') + 1;
+					fieldName = fieldName.substring(fieldNameStartIndex);
 				}
+				let embedValue;
 				if (embedName.slice(-2) === '[]') {
-					processedBody[fieldName] = processedBody.getEmbeds(
-						embedName
-					);
+					embedValue = processedBody.getEmbeds(embedName);
 				} else {
-					processedBody[fieldName] = processedBody.getEmbed(
-						embedName
-					);
+					embedValue = processedBody.getEmbed(embedName);
 				}
+				processedBody[fieldName] = embedValue;
 			}
 		}
 		
 		return Response(Object.assign({}, response, {
-			body: halson(response.body)
+			body: processedBody
 		}));
 	}
 }
