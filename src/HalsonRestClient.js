@@ -1,5 +1,6 @@
 
 import AbstractRestClient from 'ima-plugin-rest-client/src/AbstractRestClient';
+import Response from 'ima-plugin-rest-client/src/Response';
 import HalsonConfigurator from './HalsonConfigurator';
 import HalsonLinkGenerator from './HalsonLinkGenerator';
 import HalsonResponsePostProcessor from './HalsonResponsePostProcessor';
@@ -87,9 +88,23 @@ export default class HalsonRestClient extends AbstractRestClient {
 	
 	_finalizeRequestResult(response) {
 		let resource = response.request.resource;
-		if (resource.inlineResponseBody) {
-			return response.body;
+
+		let processedBody
+		if (response.body instanceof Array) {
+			processedBody = response.body(
+				entityData => new resource(this, entityData)
+			);
+		} else if (response.body) {
+			processedBody = new resource(this, response.body);
+		} else {
+			processedBody = null;
 		}
-		return response;
+
+		if (resource.inlineResponseBody) {
+			return processedBody;
+		}
+		return new Response(Object.assign({}, response, {
+			body: processedBody
+		}));
 	}
 }
