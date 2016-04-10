@@ -9,6 +9,9 @@ export default class AbstractHalsonEntity {
 		Object.assign(this, data);
 		
 		this._restClient = restClient;
+		Object.defineProperty(this, '_links', {
+			enumerable: false
+		});
 	}
 	
 	static get resourceName() {
@@ -37,11 +40,29 @@ export default class AbstractHalsonEntity {
 	}
 	
 	static list(restClient, parameters = {}, options = {}) {
-		return restClient.list(this.constructor, parameters, options);
+		return restClient.list(this, parameters, options);
 	}
 	
 	static get(restClient, id, parameters = {}, options = {}) {
-		return restClient.get(this.constructor, id, parameters, options);
+		return restClient.get(this, id, parameters, options);
+	}
+
+	static create(restClient, data, options = {}) {
+		let instance = new this(restClient, data);
+		return instance.create(options);
+	}
+
+	static delete(restClient, id, options = {}) {
+		return restClient.delete(this, id, options);
+	}
+
+	list(subResource, parameters = {}, options = {}) {
+		return this._restClient.list(subResource, parameters, options, this);
+	}
+
+	get(subResource, id, parameters = {}, options = {}) {
+		let client = this._restClient;
+		return client.get(subResource, id, parameters, options, this);
 	}
 
 	patch(data, options = {}) {
@@ -65,8 +86,6 @@ export default class AbstractHalsonEntity {
 
 	delete(options = {}) {
 		let id = this[this.constructor.idParameterName];
-		return this._restClient.delete(this.constructor, id, options);
+		return this.constructor.delete(this._restClient, id, options);
 	}
-
-	// TODO: manipulation methods, related resources manipulation methods
 }
