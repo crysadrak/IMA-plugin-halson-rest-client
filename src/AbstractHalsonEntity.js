@@ -23,10 +23,6 @@ export default class AbstractHalsonEntity {
 		return 'id';
 	}
 	
-	static getIdFieldName() {
-		return 'id';
-	}
-	
 	static get inlineEmbeds() {
 		throw null;
 	}

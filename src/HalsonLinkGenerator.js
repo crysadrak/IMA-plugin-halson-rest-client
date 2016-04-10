@@ -16,13 +16,9 @@ export default class HalsonLinkGenerator extends LinkGenerator {
 		}
 
 		if (!links[linkName]) {
-			return this._createGenericLink(
-				parentEntity,
-				linkName,
-				id,
-				parameters,
-				serverConfiguration.apiRoot
-			);
+			throw new Error('The link to the provided resource (' +
+					`${resource} AKA ${linkName}) is not set. Fix the link ` +
+					'provided by the server');
 		}
 		
 		let linkTemplate = links[linkName];
@@ -63,30 +59,5 @@ export default class HalsonLinkGenerator extends LinkGenerator {
 		}
 		
 		return link;
-	}
-
-	_createGenericLink(parentEntity, linkName, id, parameters, apiRoot) {
-		if ($Debug) {
-			console.warn(`Attempted to access the ${linkName} resource ` +
-					'which is not defined in the links map provided by ' +
-					'the server. A generic (and possibly invalid) link ' +
-					'will be used instead.');
-		}
-
-		let link = `${linkName}`;
-		if (id) {
-			link += `/${id}`;
-		}
-		
-		while (parentEntity) {
-			let parentResource = parentEntity.constructor;
-			let idFieldName = parentResource.getIdFieldName;
-			let id = parentEntity[idFieldName];
-			link = `${parentResource.resourceName}/${id}/${link}`;
-		}
-		
-		link = `${apiRoot}/${link}`;
-		
-		return `${link}?${LinkGenerator.encodeQuery(parameters)}`;
 	}
 }
