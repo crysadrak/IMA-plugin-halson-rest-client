@@ -4,8 +4,17 @@ import Response from 'ima-plugin-rest-client/src/Response';
 import ResponsePostProcessor
 		from 'ima-plugin-rest-client/src/ResponsePostProcessor';
 
+/**
+ * REST API response post-processor that decodes a HAL+JSON response body into
+ * {@code HALSONResource} instance(s), and, if required, inlines the embedded
+ * data.
+ */
 export default class HalsonResponsePostProcessor
 		extends ResponsePostProcessor {
+	/**
+	 * @inheritdoc
+	 * @override
+	 */
 	process(response) {
 		let processedBody = halson(response.body);
 		let resource = response.request.resource;
