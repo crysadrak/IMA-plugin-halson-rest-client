@@ -26,24 +26,32 @@ export default class HalsonResponsePostProcessor
 		
 		let embedNames = resource.inlineEmbeds;
 		if (embedNames) {
-			for (let embedName of embedNames) {
-				let fieldName = embedName;
-				if (fieldName.indexOf(':') > -1) {
-					let fieldNameStartIndex = fieldName.lastIndexOf(':') + 1;
-					fieldName = fieldName.substring(fieldNameStartIndex);
-				}
-				let embedValue;
-				if (embedName.slice(-2) === '[]') {
-					embedValue = processedBody.getEmbeds(embedName);
-				} else {
-					embedValue = processedBody.getEmbed(embedName);
-				}
-				processedBody[fieldName] = embedValue;
+			let entities = response.body instanceof Array ?
+					response.body : [response.body];
+			for (let entity of entities) {
+				this._processEntityEmbeds(entity, embedNames);
 			}
 		}
 		
 		return Response(Object.assign({}, response, {
 			body: processedBody
 		}));
+	}
+
+	_processEntityEmbeds(entity, embedNames) {
+		for (let embedName of embedNames) {
+			let fieldName = embedName;
+			if (fieldName.indexOf(':') > -1) {
+				let fieldNameStartIndex = fieldName.lastIndexOf(':') + 1;
+				fieldName = fieldName.substring(fieldNameStartIndex);
+			}
+			let embedValue;
+			if (embedName.slice(-2) === '[]') {
+				embedValue = entity.getEmbeds(embedName);
+			} else {
+				embedValue = entity.getEmbed(embedName);
+			}
+			entity[fieldName] = embedValue;
+		}
 	}
 }
