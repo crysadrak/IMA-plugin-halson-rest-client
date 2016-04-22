@@ -29,10 +29,14 @@ export default class HalsonLinkGenerator extends LinkGenerator {
 			[idParameterName]: id
 		});
 		
-		return this._processLinkTemplate(linkTemplate, linkParameters);
+		return this._processLinkTemplate(
+			linkTemplate,
+			linkParameters,
+			serverConfiguration.apiRoot
+		);
 	}
 	
-	_processLinkTemplate(template, parameters) {
+	_processLinkTemplate(template, parameters, apiRoot) {
 		let link = template;
 		let unusedParameters = Object.assign({}, parameters);
 		
@@ -56,6 +60,10 @@ export default class HalsonLinkGenerator extends LinkGenerator {
 		if (Object.keys(unusedParameters).length) {
 			link += (link.indexOf('?') > -1 ? QUERY_PARAMETER_SEPARATOR : '?');
 			link += LinkGenerator.encodeQuery(unusedParameters);
+		}
+
+		if (link.substring(0, 1) === '/') {
+			link = `${apiRoot}${link}`;
 		}
 		
 		return link;

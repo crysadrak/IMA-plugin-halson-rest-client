@@ -89,7 +89,7 @@ export default class HalsonRestClient extends AbstractRestClient {
 	_finalizeRequestResult(response) {
 		let resource = response.request.resource;
 
-		let processedBody
+		let processedBody;
 		if (response.body instanceof Array) {
 			processedBody = response.body(
 				entityData => new resource(this, entityData)
