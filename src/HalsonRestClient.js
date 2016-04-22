@@ -6,11 +6,11 @@ import HalsonLinkGenerator from './HalsonLinkGenerator';
 import HalsonResponsePostProcessor from './HalsonResponsePostProcessor';
 
 export default class HalsonRestClient extends AbstractRestClient {
-	constructor(httpAgent, apiRoot, linkMapResolvers, preProcessors = [],
-			postProcessors = []) {
+	constructor(httpAgent, apiRoot, linkMapResolver = body => body._links,
+			preProcessors = [], postProcessors = []) {
 		super(
 			httpAgent,
-			new HalsonConfigurator(httpAgent, apiRoot, linkMapResolvers),
+			new HalsonConfigurator(httpAgent, apiRoot, linkMapResolver),
 			new HalsonLinkGenerator(),
 			preProcessors,
 			[new HalsonResponsePostProcessor()].concat(postProcessors)
