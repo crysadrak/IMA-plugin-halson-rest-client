@@ -38,6 +38,23 @@ export default class HalsonResponsePostProcessor
 		}));
 	}
 
+	/**
+	 * Inlines the specified entities embedded within the provided entity into
+	 * entity's fields.
+	 * 
+	 * The embed names may contain prefixes separated by a colon ({@code :})
+	 * from the resource name. The prefixes will not be included in the names
+	 * of the entity fields into which the embedded resources will be inlined.
+	 * 
+	 * The entity will be modified in-place.
+	 *
+	 * @private
+	 * @param {HALSONResource} entity The pre-processed entity data with
+	 *        embedded entities that should be inlined into the entity's
+	 *        fields.
+	 * @param {string[]} embedNames The names of the embeds to inline into the
+	 *        entity's fields.
+	 */
 	_processEntityEmbeds(entity, embedNames) {
 		for (let embedName of embedNames) {
 			let fieldName = embedName;
