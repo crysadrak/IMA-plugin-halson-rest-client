@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "halson": "^2.3.1",
-    "ima-plugin-rest-client": "^0.1.3"
+    "ima-plugin-rest-client": "^0.1.4"
   },
   "devDependencies": {
     "babel-core": "^6.7.2",
