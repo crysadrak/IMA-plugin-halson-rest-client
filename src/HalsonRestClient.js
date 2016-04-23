@@ -91,7 +91,7 @@ export default class HalsonRestClient extends AbstractRestClient {
 
 		let processedBody;
 		if (response.body instanceof Array) {
-			processedBody = response.body(
+			processedBody = response.body.map(
 				entityData => new resource(this, entityData)
 			);
 		} else if (response.body) {
