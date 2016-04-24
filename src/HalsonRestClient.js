@@ -85,7 +85,22 @@ export default class HalsonRestClient extends AbstractRestClient {
 			return this._finalizeRequestResult(response);
 		});
 	}
-	
+
+	/**
+	 * Finales the resulting API response by turning the entity data into
+	 * entity instances.
+	 *
+	 * The method may also return the created entity(ies) instead of a complete
+	 * response object if the {@code inlineResponseBody} flag is set on the
+	 * entity class.
+	 *
+	 * @private
+	 * @param {Response} response The REST API response containing the data
+	 *        representing the entities.
+	 * @return {?(Response|AbstractHalsonEntity|AbstractHalsonEntity[])} The
+	 *         response with the entity data replaced by entity instances, or
+	 *         the created entity(ies).
+	 */
 	_finalizeRequestResult(response) {
 		let resource = response.request.resource;
 
