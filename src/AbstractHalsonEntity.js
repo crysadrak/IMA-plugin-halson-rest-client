@@ -9,7 +9,7 @@ export default class AbstractHalsonEntity {
 		Object.assign(this, data);
 		
 		this._restClient = restClient;
-		Object.defineProperty(this, '_links', {
+		Object.defineProperty(this, '_restClient', {
 			enumerable: false
 		});
 	}
@@ -20,6 +20,10 @@ export default class AbstractHalsonEntity {
 	}
 
 	static get idParameterName() {
+		return 'id';
+	}
+
+	static get idFieldName() {
 		return 'id';
 	}
 	
@@ -63,7 +67,7 @@ export default class AbstractHalsonEntity {
 
 	patch(data, options = {}) {
 		let resource = this.constructor;
-		let id = this[this.constructor.idParameterName];
+		let id = this[this.constructor.idFieldName];
 		let client = this._restClient;
 		return client.patch(resource, id, data, options).then((response) => {
 			Object.assign(this, data);
@@ -72,7 +76,7 @@ export default class AbstractHalsonEntity {
 	}
 
 	replace(options = {}) {
-		let id = this[this.constructor.idParameterName];
+		let id = this[this.constructor.idFieldName];
 		return this._restClient.replace(this.constructor, id, this, options);
 	}
 
@@ -81,7 +85,7 @@ export default class AbstractHalsonEntity {
 	}
 
 	delete(options = {}) {
-		let id = this[this.constructor.idParameterName];
+		let id = this[this.constructor.idFieldName];
 		return this.constructor.delete(this._restClient, id, options);
 	}
 }
