@@ -1,5 +1,5 @@
 
-import AbstractEntity from 'ima-plugin-rest-client/src/AbstractEntity';
+import AbstractEntity from 'ima-plugin-rest-client/dist/AbstractEntity';
 
 /**
  * The base class for typed REST API HALSON entities. The resources in the REST

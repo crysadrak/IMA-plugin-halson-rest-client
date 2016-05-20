@@ -1,8 +1,8 @@
 
 import halson from 'halson';
-import Response from 'ima-plugin-rest-client/src/Response';
+import Response from 'ima-plugin-rest-client/dist/Response';
 import ResponsePostProcessor
-		from 'ima-plugin-rest-client/src/ResponsePostProcessor';
+		from 'ima-plugin-rest-client/dist/ResponsePostProcessor';
 
 /**
  * REST API response post-processor that decodes a HAL+JSON response body into

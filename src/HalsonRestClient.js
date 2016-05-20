@@ -1,5 +1,5 @@
 
-import AbstractRestClient from 'ima-plugin-rest-client/src/AbstractRestClient';
+import AbstractRestClient from 'ima-plugin-rest-client/dist/AbstractRestClient';
 import HalsonConfigurator from './HalsonConfigurator';
 import HalsonLinkGenerator from './HalsonLinkGenerator';
 import HalsonResponsePostProcessor from './HalsonResponsePostProcessor';

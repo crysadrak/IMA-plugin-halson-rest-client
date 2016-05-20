@@ -1,5 +1,5 @@
 
-import Configurator from 'ima-plugin-rest-client/src/Configurator';
+import Configurator from 'ima-plugin-rest-client/dist/Configurator';
 
 /**
  * Configurator for the HAL+JSON REST API client configurator.
@@ -16,6 +16,8 @@ export default class HalsonConfigurator extends Configurator {
 	 *        response to a request to the API root.
 	 */
 	constructor(httpAgent, apiRoot, linkMapResolver) {
+		super();
+
 		/**
 		 * The IMA HTTP agent for sending HTTP request.
 		 *

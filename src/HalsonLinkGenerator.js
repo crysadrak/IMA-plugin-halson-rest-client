@@ -1,5 +1,5 @@
 
-import LinkGenerator from 'ima-plugin-rest-client/src/LinkGenerator';
+import LinkGenerator from 'ima-plugin-rest-client/dist/LinkGenerator';
 import uriTemplateParser from 'uri-template';
 
 /**
@@ -19,6 +19,8 @@ export default class HalsonLinkGenerator extends LinkGenerator {
 	 * Initializes the link generator.
 	 */
 	constructor() {
+		super();
+
 		/**
 		 * Cache of parsed URI templates. The keys are the raw URI templates.
 		 *
