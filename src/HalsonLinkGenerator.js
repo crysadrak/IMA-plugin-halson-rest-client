@@ -3,6 +3,19 @@ import LinkGenerator from 'ima-plugin-rest-client/dist/LinkGenerator';
 import uriTemplateParser from 'uri-template';
 
 /**
+ * The separator of query string's key-value pairs. While the W3C
+ * recommendation
+ * https://www.w3.org/TR/1999/REC-html401-19991224/appendix/notes.html#h-B.2.2
+ * allows both ampersands {@code &} and semicolons {@code ;} to be used in
+ * {@code application/x-www-form-urlencoded}-encoded query strings, some
+ * servers support only the ampersands, so we'll use the ampersand to ensure
+ * better compatibility with various server implementations.
+ *
+ * @type {string}
+ */
+const QUERY_PARAMETER_SEPARATOR = '&';
+
+/**
  * Private field symbols.
  *
  * @type {Object<string, symbol>}
@@ -56,9 +69,12 @@ export default class HalsonLinkGenerator extends LinkGenerator {
 		if (linkTemplate.href) {
 			linkTemplate = linkTemplate.href;
 		}
-		let linkParameters = Object.assign({}, parameters, {
-			[idParameterName]: id
-		});
+		let linkParameters = parameters;
+		if (id !== null) {
+			linkParameters = Object.assign({}, parameters, {
+				[idParameterName]: id
+			});
+		}
 		
 		return this._processURITemplate(
 			linkTemplate,
@@ -88,11 +104,40 @@ export default class HalsonLinkGenerator extends LinkGenerator {
 		}
 
 		let link = parsedTemplate.expand(parameters);
+		let unusedParameters = this._getUnusedParameters(
+			parsedTemplate,
+			parameters
+		);
+		let unusedParameterNames = Object.keys(unusedParameters);
+		if (unusedParameterNames.length) {
+			link += (link.indexOf('?') > -1) ? QUERY_PARAMETER_SEPARATOR : '?';
+			let pairs = [];
+			for (let parameterName of unusedParameterNames) {
+				let pair = [parameterName, unusedParameters[parameterName]];
+				pairs.push(pair.map(encodeURIComponent).join('='));
+			}
+			link += pairs.join(QUERY_PARAMETER_SEPARATOR);
+		}
 
 		if (link.substring(0, 1) === '/') {
 			link = `${apiRoot}${link}`;
 		}
 		
 		return link;
+	}
+	
+	_getUnusedParameters(parsedTemplate, parameters) {
+		if (!parsedTemplate.expressions.length) {
+			return parameters;
+		}
+		
+		let unusedParameters = Object.assign({}, parameters);
+		for (let expression of parsedTemplate.expressions) {
+			for (let parameter of expression.params) {
+				delete unusedParameters[parameter.name];
+			}
+		}
+		
+		return unusedParameters;
 	}
 }
