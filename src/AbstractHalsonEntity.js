@@ -8,6 +8,7 @@ import AbstractEntity from 'ima-plugin-rest-client/src/AbstractEntity';
  */
 export default class AbstractHalsonEntity extends AbstractEntity {
 	/**
+	 * Initializes the entity using the provided data.
 	 * 
 	 * @param {HalsonRestClient} restClient REST API client.
 	 * @param {Object<string, *>} data Entity data, which will be directly
@@ -26,6 +27,19 @@ export default class AbstractHalsonEntity extends AbstractEntity {
 		Object.defineProperty(this, '_links', {
 			enumerable: false
 		});
+	}
+
+	/**
+	 * Returns the name of the embed within which the entities will most likely
+	 * be embedded when listing the entities from their resource.
+	 * 
+	 * @return {string} The name of the embed within which the entities will
+	 *         most likely be embedded when listing the entities from their
+	 *         resource.
+	 */
+	static get embedName() {
+		throw new Error('The embedName getter is abstract and must be ' +
+				'overridden');
 	}
 
 	/**

@@ -16,18 +16,27 @@ export default class HalsonResponsePostProcessor
 	 * @override
 	 */
 	process(response) {
-		let processedBody;
+		let resource = response.request.resource;
+		let processedBody = null;
 		if (response.body instanceof Array) {
 			processedBody = response.body.map(entity => halson(entity));
-		} else {
+		} else if (response.body) {
 			processedBody = halson(response.body);
+			let embeds = processedBody._embedded;
+			if (embeds && embeds[resource.embedName]) {
+				processedBody = processedBody.getEmbeds(resource.embedName);
+			}
 		}
-		let resource = response.request.resource;
-		
+		if (!processedBody) {
+			return Response(Object.assign({}, response, {
+				body: null
+			}));
+		}
+
 		let embedNames = resource.inlineEmbeds;
 		if (embedNames) {
-			let entities = response.body instanceof Array ?
-					response.body : [response.body];
+			let entities = processedBody instanceof Array ?
+					processedBody : [processedBody];
 			for (let entity of entities) {
 				this._processEntityEmbeds(entity, embedNames);
 			}
