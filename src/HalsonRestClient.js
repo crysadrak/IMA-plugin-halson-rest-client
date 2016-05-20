@@ -1,11 +1,28 @@
 
 import AbstractRestClient from 'ima-plugin-rest-client/src/AbstractRestClient';
-import Response from 'ima-plugin-rest-client/src/Response';
 import HalsonConfigurator from './HalsonConfigurator';
 import HalsonLinkGenerator from './HalsonLinkGenerator';
 import HalsonResponsePostProcessor from './HalsonResponsePostProcessor';
 
+/**
+ * The REST API client for the HAL+JSON REST API.
+ */
 export default class HalsonRestClient extends AbstractRestClient {
+	/**
+	 * Initializes the HALSON REST API client.
+	 * 
+	 * @param {HttpAgent} httpAgent The IMA HTTP agent used for communication
+	 *        with the REST API.
+	 * @param {string} apiRoot URL to the REST API root.
+	 * @param {function(*): Object<string, (string|{href: string})>} linkMapResolver
+	 *        A callback that extracts the resource links map from the server's
+	 *        response to a request to the API root.
+	 * @param {RequestPreProcessor[]} preProcessors The request pre-processors.
+	 * @param {ResponsePostProcessor[]} postProcessors The response
+	 *        post-processors. The response will be processed by the
+	 *        {@linkcode HalsonResponsePostProcessor} before it will be passed
+	 *        to the provided post-processors.
+	 */
 	constructor(httpAgent, apiRoot, linkMapResolver = body => body._links,
 			preProcessors = [], postProcessors = []) {
 		super(
@@ -15,111 +32,5 @@ export default class HalsonRestClient extends AbstractRestClient {
 			preProcessors,
 			[new HalsonResponsePostProcessor()].concat(postProcessors)
 		);
-	}
-
-	list(resource, parameters = {}, options = {}, parentEntity = null) {
-		return super.list(
-			resource,
-			parameters,
-			options,
-			parentEntity
-		).then((response) => {
-			return this._finalizeRequestResult(response);
-		})
-	}
-
-	get(resource, id, parameters = {}, options = {}, parentEntity = null) {
-		return super.get(
-			resource,
-			id,
-			parameters,
-			options,
-			parentEntity
-		).then((response) => {
-			return this._finalizeRequestResult(response);
-		});
-	}
-
-	patch(resource, id, data, options = {}, parentEntity = null) {
-		return super.patch(
-			resource,
-			id,
-			data,
-			options,
-			parentEntity
-		).then((response) => {
-			return this._finalizeRequestResult(response);
-		});
-	}
-
-	replace(resource, id, data, options = {}, parentEntity = null) {
-		return super.replace(
-			resource,
-			id,
-			data,
-			options,
-			parentEntity
-		).then((response) => {
-			return this._finalizeRequestResult(response);
-		});
-	}
-
-	create(resource, data, options = {}, parentEntity = null) {
-		return super.create(
-			resource,
-			data,
-			options,
-			parentEntity
-		).then((response) => {
-			return this._finalizeRequestResult(response);
-		});
-	}
-
-	delete(resource, id, options = {}, parentEntity = null) {
-		return super.delete(
-			resource,
-			id,
-			options,
-			parentEntity
-		).then((response) => {
-			return this._finalizeRequestResult(response);
-		});
-	}
-
-	/**
-	 * Finales the resulting API response by turning the entity data into
-	 * entity instances.
-	 *
-	 * The method may also return the created entity(ies) instead of a complete
-	 * response object if the {@code inlineResponseBody} flag is set on the
-	 * entity class.
-	 *
-	 * @private
-	 * @param {Response} response The REST API response containing the data
-	 *        representing the entities.
-	 * @return {?(Response|AbstractHalsonEntity|AbstractHalsonEntity[])} The
-	 *         response with the entity data replaced by entity instances, or
-	 *         the created entity(ies).
-	 */
-	_finalizeRequestResult(response) {
-		let resource = response.request.resource;
-
-		let processedBody;
-		if (response.body instanceof Array) {
-			processedBody = response.body.map(
-				entityData => new resource(this, entityData)
-			);
-		} else if (response.body) {
-			processedBody = new resource(this, response.body);
-		} else {
-			processedBody = null;
-		}
-
-		if (resource.inlineResponseBody) {
-			return processedBody;
-		}
-		return new Response(Object.assign({}, response, {
-			body: processedBody
-		}));
 	}
 }
