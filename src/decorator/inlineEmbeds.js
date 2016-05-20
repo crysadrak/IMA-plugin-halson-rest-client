@@ -12,8 +12,9 @@
  *        should be inlined into the entity's fields.
  * @return {function(function(
  *             new: AbstractHalsonEntity,
- *             restClient: HalsonRestClient,
- *             data: Object<string, *>
+ *             HalsonRestClient,
+ *             Object<string, *>,
+ *             ?AbstractHalsonEntity=
  *         ))} Callback that sets the list of names of embeds on the class
  *         provided to it.
  */

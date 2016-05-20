@@ -8,8 +8,9 @@
  *        specify the ID(s) of the entity(ies).
  * @return {function(function(
  *             new: AbstractHalsonEntity,
- *             restClient: HalsonRestClient,
- *             data: Object<string, *>
+ *             HalsonRestClient,
+ *             Object<string, *>,
+ *             ?AbstractHalsonEntity=
  *         ))} Callback that sets the ID link parameter name on the class
  *         provided to it.
  */
