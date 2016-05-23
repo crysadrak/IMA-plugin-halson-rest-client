@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "halson": "^2.3.1",
-    "ima-plugin-rest-client": "^0.2.3",
+    "ima-plugin-rest-client": "^0.2.4",
     "uri-template": "^1.0.0"
   },
   "devDependencies": {
