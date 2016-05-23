@@ -58,14 +58,14 @@ export default class AbstractHalsonEntity extends AbstractEntity {
 	 * Returns the names of the embedded resources that should be inlined into
 	 * the entity's fields.
 	 * 
-	 * The embed names may contain prefixes separated by a colon ({@code :}) from
-	 * the resource name. The prefixes will not be included in the names of the
-	 * entity fields into which the embedded resources will be inlined.
+	 * The embed names may contain prefixes separated by a colon ({@code :})
+	 * from the resource name. The prefixes will not be included in the names
+	 * of the entity fields into which the embedded resources will be inlined.
 	 * 
 	 * @return {?string[]} The names of the embedded resources that should be
 	 *         inlined into the entity's fields.
 	 */
 	static get inlineEmbeds() {
-		throw null;
+		return null;
 	}
 }

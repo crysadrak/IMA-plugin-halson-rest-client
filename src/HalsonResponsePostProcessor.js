@@ -28,7 +28,7 @@ export default class HalsonResponsePostProcessor
 			}
 		}
 		if (!processedBody) {
-			return Response(Object.assign({}, response, {
+			return new Response(Object.assign({}, response, {
 				body: null
 			}));
 		}
@@ -42,7 +42,7 @@ export default class HalsonResponsePostProcessor
 			}
 		}
 		
-		return Response(Object.assign({}, response, {
+		return new Response(Object.assign({}, response, {
 			body: processedBody
 		}));
 	}
