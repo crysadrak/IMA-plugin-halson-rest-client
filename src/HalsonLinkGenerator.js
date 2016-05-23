@@ -104,40 +104,11 @@ export default class HalsonLinkGenerator extends LinkGenerator {
 		}
 
 		let link = parsedTemplate.expand(parameters);
-		let unusedParameters = this._getUnusedParameters(
-			parsedTemplate,
-			parameters
-		);
-		let unusedParameterNames = Object.keys(unusedParameters);
-		if (unusedParameterNames.length) {
-			link += (link.indexOf('?') > -1) ? QUERY_PARAMETER_SEPARATOR : '?';
-			let pairs = [];
-			for (let parameterName of unusedParameterNames) {
-				let pair = [parameterName, unusedParameters[parameterName]];
-				pairs.push(pair.map(encodeURIComponent).join('='));
-			}
-			link += pairs.join(QUERY_PARAMETER_SEPARATOR);
-		}
 
 		if (link.substring(0, 1) === '/') {
 			link = `${apiRoot}${link}`;
 		}
 		
 		return link;
-	}
-	
-	_getUnusedParameters(parsedTemplate, parameters) {
-		if (!parsedTemplate.expressions.length) {
-			return parameters;
-		}
-		
-		let unusedParameters = Object.assign({}, parameters);
-		for (let expression of parsedTemplate.expressions) {
-			for (let parameter of expression.params) {
-				delete unusedParameters[parameter.name];
-			}
-		}
-		
-		return unusedParameters;
 	}
 }

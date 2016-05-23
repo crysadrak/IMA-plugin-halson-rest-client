@@ -60,7 +60,7 @@ describe('HalsonLinkGenerator', () => {
 		expect(uri).toBe(CONFIG.apiRoot + CONFIG.links.user.href);
 	});
 
-	it('should append extraneous parameters to the URIs', () => {
+	it('should not append extraneous parameters to the URIs', () => {
 		let uri = linkGenerator.createLink(
 			null,
 			Entity,
@@ -68,7 +68,7 @@ describe('HalsonLinkGenerator', () => {
 			{ test: 'abc' },
 			CONFIG
 		);
-		expect(uri).toBe('http://localhost/api/user?test=abc')
+		expect(uri).toBe('http://localhost/api/user')
 	});
 
 	it('should handle inline and query parameters', () => {
