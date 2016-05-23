@@ -28,14 +28,6 @@ describe('HalsonLinkGenerator', () => {
 	const CONFIG = {
 		apiRoot: 'http://localhost/api',
 		links: {
-			'schedules': {
-				'href': '/schedules{?channel_ids,timestamp_from,timestamp_to}',
-				'templated': true
-			},
-			'search': {
-				'href': '/search{?phrase,limit,offest,since,until}',
-				'templated': true
-			},
 			'user': {
 				'href': '/user'
 			},
@@ -77,6 +69,56 @@ describe('HalsonLinkGenerator', () => {
 			CONFIG
 		);
 		expect(uri).toBe('http://localhost/api/user?test=abc')
+	});
+
+	it('should handle inline and query parameters', () => {
+		resourceName = 'programme';
+		let uri = linkGenerator.createLink(null, Entity, 123, {
+			old_id: 4654
+		}, CONFIG);
+		expect(uri).toBe('http://localhost/api/programme/123?old_id=4654');
+
+		resourceName = 'tips';
+		uri = linkGenerator.createLink(null, Entity, null, {
+			channel_ids: [1, 2, 3],
+			timestamp: 1234567890
+		}, CONFIG);
+		expect(uri).toBe(
+			'http://localhost/api/tips?channel_ids=1,2,3&timestamp=1234567890'
+		);
+	});
+
+	it('should skip query parameters that were not provided', () => {
+		resourceName = 'tips';
+		let uri = linkGenerator.createLink(null, Entity, null, {
+			channel_ids: [1, 2]
+		}, CONFIG);
+		expect(uri).toBe('http://localhost/api/tips?channel_ids=1,2');
+	});
+
+	it('should handle simple form of links', () => {
+		resourceName = 'tips';
+		let uri = linkGenerator.createLink(null, Entity, null, {
+			channel_ids: [1, 2]
+		}, {
+			apiRoot: 'http://localhost/api',
+			links: {
+				tips: '/tips{?channel_ids,timestamp}'
+			}
+		});
+		expect(uri).toBe('http://localhost/api/tips?channel_ids=1,2');
+	});
+
+	it('should use links of the parent entity if one is provided', () => {
+		resourceName = 'tips';
+		let uri = linkGenerator.createLink({
+			_links: {
+				tips: '/some/12/tips{?channel_ids,timestamp}'
+			}
+		}, Entity, null, {
+			channel_ids: [1, 2]
+		}, CONFIG);
+		expect(uri).toBe('http://localhost/api/some/12/tips?channel_ids=1,2');
 	});
 
 });
