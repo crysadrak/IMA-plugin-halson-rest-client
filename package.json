@@ -1,6 +1,6 @@
 {
   "name": "ima-plugin-halson-rest-client",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "HAL+JSON REST API client for IMA applications.",
   "author": "Martin Jurča <martin.jurca@firma.seznam.cz>",
   "main": "dist/HalsonRestClient.js",
