@@ -74,6 +74,7 @@ export default class HalsonResponsePostProcessor
 			let embedValue;
 			if (embedName.slice(-2) === '[]') {
 				embedValue = entity.getEmbeds(embedName.slice(0, -2));
+				fieldName = fieldName.slice(0, -2);
 			} else {
 				embedValue = entity.getEmbed(embedName);
 			}
