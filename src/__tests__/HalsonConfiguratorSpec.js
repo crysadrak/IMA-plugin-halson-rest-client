@@ -7,10 +7,9 @@ describe('HalsonConfigurator', () => {
 	const LINK_MAP_RESOLVER = body => body._links;
 
 	it('should fetch the configuration', (done) => {
-		let httpAgentCalled = false;
 		let httpAgent = {
 			get(url) {
-				expect(url).toBe(API_ROOT);
+				expect(url).toBe(API_ROOT + '/');
 				return Promise.resolve({
 					status: 200,
 					body: { _links: { stuff: 'stuff too' } },
@@ -39,8 +38,8 @@ describe('HalsonConfigurator', () => {
 			});
 			done();
 		}).catch((error) => {
-			fail(error.stack)
-			done()
+			fail(error.stack);
+			done();
 		});
 	});
 
