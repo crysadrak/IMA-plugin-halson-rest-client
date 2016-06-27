@@ -11,11 +11,11 @@ export default class HalsonConfigurator extends Configurator {
 	 * @param {ima.http.HttpAgent} httpAgent The IMA HTTP agent for sending
 	 *        HTTP request.
 	 * @param {string} apiRoot URL to the REST API root.
-	 * @param {function(*): Object<string, (string|{href: string})>} linkMapResolver
+	 * @param {function(*): Object<string, (string|{href: string})>=} linkMapResolver
 	 *        A callback that extracts the resource links map from the server's
 	 *        response to a request to the API root.
 	 */
-	constructor(httpAgent, apiRoot, linkMapResolver) {
+	constructor(httpAgent, apiRoot, linkMapResolver = body => body._links) {
 		super();
 
 		/**
@@ -39,8 +39,6 @@ export default class HalsonConfigurator extends Configurator {
 		 * @type {function(*): Object<string, (string|{href: string})>}
 		 */
 		this._linkMapResolver = linkMapResolver;
-
-		Object.freeze(this);
 	}
 
 	/**
@@ -54,13 +52,47 @@ export default class HalsonConfigurator extends Configurator {
 	 *         root resource link map.
 	 */
 	getConfiguration() {
-		return this._httpAgent.get(this._apiRoot).then((response) => {
+		let {url, data, options} = this._prepareResourceLinksRequest();
+		return this._httpAgent.get(url, data, options).then((response) => {
 			let config = response.body;
 			config._apiRoot = this._apiRoot;
-			return {
-				links: this._linkMapResolver(response.body),
-				apiRoot: this._apiRoot
-			};
+			return this._processResourceLinksMapResponse(response.body);
 		});
+	}
+
+	/**
+	 * Generates the request to executed using the IMA's HTTP agent in order to
+	 * fetch the navigation links map, which will then be used to generate the
+	 * configuration object for the HALSON REST API client.
+	 *
+	 * @protected
+	 * @return {{url: string, data: null, options: {}}} Request to execute
+	 *         using the IMA's HTTP agent in order to fetch the REST API's
+	 *         navigation links map.
+	 */
+	_prepareResourceLinksRequest() {
+		return {
+			url: this._apiRoot + '/',
+			data: null,
+			options: {}
+		};
+	}
+
+	/**
+	 * Processes the response body the server's response to the request to the
+	 * REST API's navigation links map.
+	 *
+	 * @protected
+	 * @param {*} responseBody The server's response's body.
+	 * @return {{
+	 *           links: Object.<string, string|{href: string}>,
+	 *           apiRoot: string
+	 *         }} The HALSON REST API client configruration object.
+	 */
+	_processResourceLinksMapResponse(responseBody) {
+		return {
+			links: this._linkMapResolver(responseBody),
+			apiRoot: this._apiRoot
+		};
 	}
 }
