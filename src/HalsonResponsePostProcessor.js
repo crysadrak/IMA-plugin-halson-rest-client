@@ -13,7 +13,6 @@ export default class HalsonResponsePostProcessor
 		extends ResponsePostProcessor {
 	/**
 	 * @inheritdoc
-	 * @override
 	 */
 	process(response) {
 		let resource = response.request.resource;
@@ -57,7 +56,6 @@ export default class HalsonResponsePostProcessor
 	 * 
 	 * The entity will be modified in-place.
 	 *
-	 * @private
 	 * @param {HALSONResource} entity The pre-processed entity data with
 	 *        embedded entities that should be inlined into the entity's
 	 *        fields.

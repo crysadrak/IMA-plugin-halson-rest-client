@@ -3,19 +3,6 @@ import LinkGenerator from 'ima-plugin-rest-client/dist/LinkGenerator';
 import uriTemplateParser from 'uri-template';
 
 /**
- * The separator of query string's key-value pairs. While the W3C
- * recommendation
- * https://www.w3.org/TR/1999/REC-html401-19991224/appendix/notes.html#h-B.2.2
- * allows both ampersands {@code &} and semicolons {@code ;} to be used in
- * {@code application/x-www-form-urlencoded}-encoded query strings, some
- * servers support only the ampersands, so we'll use the ampersand to ensure
- * better compatibility with various server implementations.
- *
- * @type {string}
- */
-const QUERY_PARAMETER_SEPARATOR = '&';
-
-/**
  * Private field symbols.
  *
  * @type {Object<string, symbol>}
@@ -46,7 +33,6 @@ export default class HalsonLinkGenerator extends LinkGenerator {
 
 	/**
 	 * @inheritdoc
-	 * @override
 	 */
 	createLink(parentEntity, resource, id, parameters, serverConfiguration) {
 		let linkName = resource.resourceName;
@@ -87,7 +73,6 @@ export default class HalsonLinkGenerator extends LinkGenerator {
 	 * Processes the provided URI template by replacing the placeholders with
 	 * the provided parameter values.
 	 *
-	 * @private
 	 * @param {string} template URI template to process.
 	 * @param {Object<string, (number|string|(number|string)[])>} parameters
 	 *        Map of URI template's placeholder names to values.
