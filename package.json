@@ -25,6 +25,9 @@
 		"type": "git",
 		"url": "git+https://github.com/jurca/IMA-plugin-halson-rest-client.git"
 	},
+	"publishConfig": {
+		"registry": "http://registry.npmjs.org/"
+	},
 	"bugs": {
 		"url": "https://github.com/jurca/IMA-plugin-halson-rest-client/issues"
 	},
