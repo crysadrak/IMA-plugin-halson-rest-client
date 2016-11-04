@@ -4,33 +4,47 @@ require('babel-core/register.js')({
 	].map(require.resolve) // fixes the issue with babel loader & linked modules
 });
 
-var gulp = require('gulp');
-var babel = require('gulp-babel');
-var jasmine = require('gulp-jasmine');
+let del = require('del');
+let gulp = require('gulp');
+let babel = require('gulp-babel');
+let jasmine = require('gulp-jasmine');
 
+exports.build = gulp.series(
+	clean,
+	gulp.parallel(
+		build_js,
+		copy
+	)
+);
 
-// build module
-gulp.task('build', () => {
-	return (
-		gulp.src('./src/**/!(*Spec).js')
+function build_js() {
+	return gulp
+		.src('./src/**/!(*Spec).js')
 		.pipe(babel({
 			moduleIds: true,
 			presets: ['es2015']
 		}))
-		.pipe(gulp.dest('./dist'))
-	);
-});
+		.pipe(gulp.dest('./dist'));
+}
 
-//run test
-gulp.task('test', () => {
-	return (
-		gulp.src('./src/**/*Spec.js')
-			.pipe(jasmine({ includeStackTrace: true }))
-	);
-});
+function copy() {
+	return gulp
+		.src(['./package.json', './LICENSE', './README.md'])
+		.pipe(gulp.dest('./dist'));
+}
 
+function clean() {
+	return del('./dist');
+}
 
-// -------------------------------------PRIVATE HELPER TASKS
-gulp.task('dev', () => {
-	gulp.watch(['./src/**/*.js'], ['test']);
-});
+exports.test = test;
+function test() {
+	return gulp
+		.src('./src/**/*Spec.js')
+		.pipe(jasmine({ includeStackTrace: true }));
+}
+
+exports.dev = dev;
+function dev() {
+	return gulp.watch(['./src/**/*.js'], test);
+}
