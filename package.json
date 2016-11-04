@@ -1,42 +1,42 @@
 {
-  "name": "ima-plugin-halson-rest-client",
-  "version": "0.3.1",
-  "description": "HAL+JSON REST API client for IMA applications.",
-  "author": "Martin Jurča <martin.jurca@firma.seznam.cz>",
-  "main": "dist/HalsonRestClient.js",
-  "homepage": "https://github.com/jurca/IMA-plugin-halson-rest-client#readme",
-  "keywords": [
-    "ima",
-    "ima.js",
-    "rest",
-    "hal",
-    "json",
-    "halson",
-    "plugin"
-  ],
-  "license": "ISC",
-  "scripts": {
-    "build": "node node_modules/gulp/bin/gulp.js build",
-    "test": "node node_modules/gulp/bin/gulp.js test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jurca/IMA-plugin-halson-rest-client.git"
-  },
-  "bugs": {
-    "url": "https://github.com/jurca/IMA-plugin-halson-rest-client/issues"
-  },
-  "dependencies": {
-    "halson": "^2.3.1",
-    "ima-plugin-rest-client": "^0.2.4",
-    "uri-template": "^1.0.0"
-  },
-  "devDependencies": {
-    "babel-core": "^6.7.2",
-    "babel-preset-es2015": "^6.9.0",
-    "eslint": "^2.4.0",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-jasmine": "^2.3.0"
-  }
+	"name": "ima-plugin-halson-rest-client",
+	"version": "0.3.1",
+	"description": "HAL+JSON REST API client for IMA applications.",
+	"author": "Martin Jurča <martin.jurca@firma.seznam.cz>",
+	"main": "dist/HalsonRestClient.js",
+	"homepage": "https://github.com/jurca/IMA-plugin-halson-rest-client#readme",
+	"keywords": [
+		"ima",
+		"ima.js",
+		"rest",
+		"hal",
+		"json",
+		"halson",
+		"plugin"
+	],
+	"license": "ISC",
+	"scripts": {
+		"build": "node node_modules/gulp/bin/gulp.js build",
+		"test": "node node_modules/gulp/bin/gulp.js test"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jurca/IMA-plugin-halson-rest-client.git"
+	},
+	"bugs": {
+		"url": "https://github.com/jurca/IMA-plugin-halson-rest-client/issues"
+	},
+	"dependencies": {
+		"halson": "^2.3.1",
+		"ima-plugin-rest-client": "^0.2.4",
+		"uri-template": "^1.0.0"
+	},
+	"devDependencies": {
+		"babel-core": "^6.7.2",
+		"babel-preset-es2015": "^6.9.0",
+		"eslint": "^2.4.0",
+		"gulp": "^3.9.1",
+		"gulp-babel": "^6.1.2",
+		"gulp-jasmine": "^2.3.0"
+	}
 }
