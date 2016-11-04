@@ -2,6 +2,20 @@
 import AbstractEntity from 'ima-plugin-rest-client/dist/AbstractEntity';
 
 /**
+ * Private field symbols.
+ *
+ * @type {Object<string, symbol>}
+ */
+const PRIVATE = Object.freeze({
+	embedName: Symbol('embedName'),
+	embedNameConfigured: Symbol('embedNameConfigured'),
+	idParameterName: Symbol('idParameterName'),
+	idParameterNameConfigured: Symbol('idParameterNameConfigured'),
+	inlineEmbeds: Symbol('inlineEmbeds'),
+	inlineEmbedsConfigured: Symbol('inlineEmbedsConfigured')
+});
+
+/**
  * The base class for typed REST API HALSON entities. The resources in the REST
  * API will be identified by classes extending this one by the HALSON REST API
  * client.
@@ -38,8 +52,29 @@ export default class AbstractHalsonEntity extends AbstractEntity {
 	 *         resource.
 	 */
 	static get embedName() {
-		throw new Error('The embedName getter is abstract and must be ' +
-				'overridden');
+		if (this[PRIVATE.embedNameConfigured]) {
+			return this[PRIVATE.embedName];
+		}
+
+		throw new Error(
+			'The embedName getter is abstract and must be overridden'
+		);
+	}
+
+	/**
+	 * Configures the name of the embed within which the entities will most
+	 * likely be embedded when listing the entities from their resource.
+	 *
+	 * This setter is used mainly for compatibility with the Public Class
+	 * Fields ES proposal.
+	 *
+	 * @param {string} embedName The name the embed within which the entities
+	 *        will most likely be embedded when listing the entities from their
+	 *        resource.
+	 */
+	static set embedName(embedName) {
+		this[PRIVATE.embedName] = embedName;
+		this[PRIVATE.embedNameConfigured] = true;
 	}
 
 	/**
@@ -50,8 +85,28 @@ export default class AbstractHalsonEntity extends AbstractEntity {
 	 *         resource to identify individual entities.
 	 */
 	static get idParameterName() {
-		throw new Error('The idParameterName getter is abstract and must be ' +
-				'overridden');
+		if (this[PRIVATE.idParameterNameConfigured]) {
+			return this[PRIVATE.idParameterName];
+		}
+
+		throw new Error(
+			'The idParameterName getter is abstract and must be overridden'
+		);
+	}
+
+	/**
+	 * Configures the name of the ID parameter used in this entity's resource
+	 * to identify individual entities.
+	 *
+	 * This setter is used mainly for compatibility with the Public Class
+	 * Fields ES proposal.
+	 *
+	 * @param {string} idParameterName The name of the ID parameter used in
+	 *        this entity's resource to identify individual entities.
+	 */
+	static set idParameterName(idParameterName) {
+		this[PRIVATE.idParameterName] = idParameterName;
+		this[PRIVATE.idParameterNameConfigured] = true;
 	}
 
 	/**
@@ -66,6 +121,25 @@ export default class AbstractHalsonEntity extends AbstractEntity {
 	 *         inlined into the entity's fields.
 	 */
 	static get inlineEmbeds() {
+		if (this[PRIVATE.inlineEmbedsConfigured]) {
+			return this[PRIVATE.inlineEmbeds];
+		}
+
 		return null;
+	}
+
+	/**
+	 * Configures the names of the embedded resources that should be inlined
+	 * into the entity's fields.
+	 *
+	 * This setter is used mainly for compatibility with the Public Class
+	 * Fields ES proposal.
+	 *
+	 * @param {?string[]} inlineEmbeds The names of the embedded resources that
+	 *        should be inlined into the entity's fields.
+	 */
+	static set inlineEmbeds(inlineEmbeds) {
+		this[PRIVATE.inlineEmbeds] = inlineEmbeds;
+		this[PRIVATE.inlineEmbedsConfigured] = true;
 	}
 }
