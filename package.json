@@ -44,5 +44,10 @@
 		"gulp": "github:gulpjs/gulp#c120a94",
 		"gulp-babel": "6.1.2",
 		"gulp-jasmine": "2.4.2"
+	},
+	"browserify": {
+		"transform": [
+			"babelify"
+		]
 	}
 }
