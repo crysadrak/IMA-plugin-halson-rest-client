@@ -191,7 +191,7 @@ describe('HalsonResponsePostProcessor', () => {
 					data: 987
 				}
 			}
-		}])
+		}]);
 	});
 
 	class Entity extends AbstractHalsonEntity {
@@ -204,7 +204,7 @@ describe('HalsonResponsePostProcessor', () => {
 		}
 
 		static get embedName() {
-			return 'foo'
+			return 'foo';
 		}
 
 		static get idParameterName() {
@@ -243,7 +243,7 @@ describe('HalsonResponsePostProcessor', () => {
 
 		let copy = {};
 		for (let field in source) {
-			if (!source.hasOwnProperty(field)) {
+			if (!Object.hasOwnProperty.call(source, field)) {
 				continue;
 			}
 

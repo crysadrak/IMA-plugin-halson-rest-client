@@ -25,7 +25,7 @@ describe('HalsonConfigurator', () => {
 				});
 			}
 		};
-		
+
 		let configurator = new HalsonConfigurator(
 			httpAgent,
 			API_ROOT,

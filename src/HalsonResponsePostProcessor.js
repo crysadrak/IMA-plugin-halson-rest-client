@@ -2,7 +2,7 @@
 import halson from 'halson';
 import { Response } from '@ima/plugin-rest-client/dist/Response';
 import ResponsePostProcessor
-		from 'ima-plugin-rest-client/dist/ResponsePostProcessor';
+	from 'ima-plugin-rest-client/dist/ResponsePostProcessor';
 
 /**
  * REST API response post-processor that decodes a HAL+JSON response body into
@@ -10,7 +10,7 @@ import ResponsePostProcessor
  * data.
  */
 export default class HalsonResponsePostProcessor
-		extends ResponsePostProcessor {
+	extends ResponsePostProcessor {
 	/**
 	 * @inheritdoc
 	 */
@@ -35,12 +35,12 @@ export default class HalsonResponsePostProcessor
 		let embedNames = resource.inlineEmbeds;
 		if (embedNames) {
 			let entities = processedBody instanceof Array ?
-					processedBody : [processedBody];
+				processedBody : [processedBody];
 			for (let entity of entities) {
 				this._processEntityEmbeds(entity, embedNames);
 			}
 		}
-		
+
 		return new Response(Object.assign({}, response, {
 			body: processedBody
 		}));
@@ -49,11 +49,11 @@ export default class HalsonResponsePostProcessor
 	/**
 	 * Inlines the specified entities embedded within the provided entity into
 	 * entity's fields.
-	 * 
+	 *
 	 * The embed names may contain prefixes separated by a colon ({@code :})
 	 * from the resource name. The prefixes will not be included in the names
 	 * of the entity fields into which the embedded resources will be inlined.
-	 * 
+	 *
 	 * The entity will be modified in-place.
 	 *
 	 * @param {HALSONResource} entity The pre-processed entity data with

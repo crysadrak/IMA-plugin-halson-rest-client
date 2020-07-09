@@ -1,9 +1,3 @@
-require('babel-core/register.js')({
-	'plugins': [
-		'babel-plugin-transform-es2015-modules-commonjs'
-	].map(require.resolve) // fixes the issue with babel loader & linked modules
-});
-
 let del = require('del');
 let gulp = require('gulp');
 let babel = require('gulp-babel');
@@ -12,18 +6,20 @@ let jasmine = require('gulp-jasmine');
 exports.build = gulp.series(
 	clean,
 	gulp.parallel(
-		build_js,
+		buildJs,
 		copy
 	)
 );
 
-function build_js() {
+function buildJs() {
 	return gulp
 		.src('./src/**/!(*Spec).js')
-		.pipe(babel({
-			moduleIds: true,
-			presets: ['es2015']
-		}))
+		.pipe(
+			babel({
+				moduleIds: true,
+				presets: ['@babel/react'],
+				plugins: ['@babel/plugin-transform-modules-commonjs']
+			}))
 		.pipe(gulp.dest('./dist'));
 }
 

@@ -6,7 +6,7 @@ import HalsonRestClient from '../HalsonRestClient';
 describe('HalsonLinkGenerator', () => {
 
 	let resourceName;
-	
+
 	class Entity extends AbstractHalsonEntity {
 		static get resourceName() {
 			return resourceName;
@@ -68,7 +68,7 @@ describe('HalsonLinkGenerator', () => {
 			{ test: 'abc' },
 			CONFIG
 		);
-		expect(uri).toBe('http://localhost/api/user')
+		expect(uri).toBe('http://localhost/api/user');
 	});
 
 	it('should handle inline and query parameters', () => {

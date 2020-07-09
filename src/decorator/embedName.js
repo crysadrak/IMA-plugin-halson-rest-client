@@ -3,7 +3,7 @@
  * Decorator for setting the static {@code embedName} property of an entity
  * class, which specifies the name of the embed that contains the entities
  * when listing the resource.
- * 
+ *
  * @param {string} embedName The name of the embed that contains the entities
  *        when listing the resource.
  * @return {function(function(
@@ -20,5 +20,5 @@ export default (embedName) => {
 		Object.defineProperty(classConstructor, 'embedName', {
 			value: embedName
 		});
-	}
-}
+	};
+};

@@ -4,7 +4,7 @@
 	"description": "HAL+JSON REST API client for IMA applications.",
 	"author": "Martin Jurča <martin.jurca@firma.seznam.cz>",
 	"main": "HalsonRestClient.js",
-	"homepage": "https://github.com/seznam/IMA-plugin-halson-rest-client#readme",
+	"homepage": "https://github.com/crysadrak/IMA-plugin-halson-rest-client#readme",
 	"keywords": [
 		"ima",
 		"ima.js",
@@ -23,13 +23,13 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/seznam/IMA-plugin-halson-rest-client.git"
+		"url": "git+https://github.com/crysadrak/IMA-plugin-halson-rest-client.git"
 	},
 	"publishConfig": {
 		"registry": "http://registry.npmjs.org/"
 	},
 	"bugs": {
-		"url": "https://github.com/seznam/IMA-plugin-halson-rest-client/issues"
+		"url": "https://github.com/crysadrak/IMA-plugin-halson-rest-client/issues"
 	},
 	"dependencies": {
 		"halson": "3.0.0",
@@ -37,9 +37,12 @@
 		"uri-template": "1.0.1"
 	},
 	"devDependencies": {
+		"@babel/core": "7.6.4",
+		"@babel/plugin-transform-modules-commonjs": "7.6.0",
+		"@babel/preset-react": "7.6.3",
 		"@ima/core": "17.6.0",
-		"babel-core": "6.26.3",
-		"babel-preset-es2015": "6.24.1",
+		"babel-eslint": "10.1.0",
+		"babel-plugin-ima-logger": "3.0.1",
 		"del": "5.1.0",
 		"eslint": "7.4.0",
 		"gulp": "4.0.2",

@@ -14,9 +14,9 @@ describe('AbstractHalsonEntity', () => {
 
 	it('should declare the _links property if it does not exist', () => {
 		let entity = new Entity(restClient, {});
-		expect(entity.hasOwnProperty('_links')).toBeTruthy();
+		expect(Object.hasOwnProperty.call(entity, '_links')).toBeTruthy();
 	});
-	
+
 	it('should make the _links property non-enumarable', () => {
 		let entity = new Entity(restClient, {
 			_links: { foo: 'bar' }

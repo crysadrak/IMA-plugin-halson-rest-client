@@ -50,7 +50,7 @@ export default class HalsonLinkGenerator extends LinkGenerator {
 					`${resource} AKA ${linkName}) is not set. Fix the link ` +
 					'provided by the server');
 		}
-		
+
 		let linkTemplate = links[linkName];
 		if (linkTemplate.href) {
 			linkTemplate = linkTemplate.href;
@@ -61,7 +61,7 @@ export default class HalsonLinkGenerator extends LinkGenerator {
 				[idParameterName]: id
 			});
 		}
-		
+
 		return this._processURITemplate(
 			linkTemplate,
 			linkParameters,
@@ -93,7 +93,7 @@ export default class HalsonLinkGenerator extends LinkGenerator {
 		if (link.substring(0, 1) === '/') {
 			link = `${apiRoot}${link}`;
 		}
-		
+
 		return link;
 	}
 }

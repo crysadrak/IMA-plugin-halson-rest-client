@@ -23,7 +23,7 @@ const PRIVATE = Object.freeze({
 export default class AbstractHalsonEntity extends AbstractEntity {
 	/**
 	 * Initializes the entity using the provided data.
-	 * 
+	 *
 	 * @param {HalsonRestClient} restClient REST API client.
 	 * @param {Object<string, *>} data Entity data, which will be directly
 	 *        assigned to the entity's fields.
@@ -34,7 +34,7 @@ export default class AbstractHalsonEntity extends AbstractEntity {
 	 */
 	constructor(restClient, data, parentEntity = null) {
 		super(restClient, data, parentEntity);
-		
+
 		if (!this._links) {
 			this._links = {};
 		}
@@ -46,7 +46,7 @@ export default class AbstractHalsonEntity extends AbstractEntity {
 	/**
 	 * Returns the name of the embed within which the entities will most likely
 	 * be embedded when listing the entities from their resource.
-	 * 
+	 *
 	 * @return {string} The name of the embed within which the entities will
 	 *         most likely be embedded when listing the entities from their
 	 *         resource.
@@ -80,7 +80,7 @@ export default class AbstractHalsonEntity extends AbstractEntity {
 	/**
 	 * Returns the name of the ID parameter used in this entity's resource to
 	 * identify individual entities.
-	 * 
+	 *
 	 * @return {string} The name of the ID parameter used in this entity's
 	 *         resource to identify individual entities.
 	 */
@@ -112,11 +112,11 @@ export default class AbstractHalsonEntity extends AbstractEntity {
 	/**
 	 * Returns the names of the embedded resources that should be inlined into
 	 * the entity's fields.
-	 * 
+	 *
 	 * The embed names may contain prefixes separated by a colon ({@code :})
 	 * from the resource name. The prefixes will not be included in the names
 	 * of the entity fields into which the embedded resources will be inlined.
-	 * 
+	 *
 	 * @return {?string[]} The names of the embedded resources that should be
 	 *         inlined into the entity's fields.
 	 */

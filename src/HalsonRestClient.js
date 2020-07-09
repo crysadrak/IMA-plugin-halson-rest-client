@@ -1,6 +1,5 @@
 
 import { AbstractRestClient } from '@ima/plugin-rest-client/dist/AbstractRestClient';
-import { Configurator } from '@ima/plugin-rest-client/dist/Configurator';
 import HalsonLinkGenerator from './HalsonLinkGenerator';
 import HalsonResponsePostProcessor from './HalsonResponsePostProcessor';
 
@@ -10,7 +9,7 @@ import HalsonResponsePostProcessor from './HalsonResponsePostProcessor';
 export default class HalsonRestClient extends AbstractRestClient {
 	/**
 	 * Initializes the HALSON REST API client.
-	 * 
+	 *
 	 * @param {HttpAgent} httpAgent The IMA HTTP agent used for communication
 	 *        with the REST API.
 	 * @param {Configurator} configurator URL to the REST API root.
@@ -21,7 +20,7 @@ export default class HalsonRestClient extends AbstractRestClient {
 	 *        to the provided post-processors.
 	 */
 	constructor(httpAgent, configurator, preProcessors = [],
-			postProcessors = []) {
+		postProcessors = []) {
 		super(
 			httpAgent,
 			configurator,

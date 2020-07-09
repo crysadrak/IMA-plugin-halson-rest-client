@@ -7,7 +7,7 @@ import { Configurator } from '@ima/plugin-rest-client/dist/Configurator';
 export default class HalsonConfigurator extends Configurator {
 	/**
 	 * Initializes the HAL+JSON REST API client configurator.
-	 * 
+	 *
 	 * @param {ima.http.HttpAgent} httpAgent The IMA HTTP agent for sending
 	 *        HTTP request.
 	 * @param {string} apiRoot URL to the REST API root.
@@ -44,7 +44,7 @@ export default class HalsonConfigurator extends Configurator {
 	/**
 	 * Fetches the server-provided REST API client configuration - the resource
 	 * links map.
-	 * 
+	 *
 	 * @return {Promise<{
 	 *             links: Object<string, (string|{href: string})>,
 	 *             apiRoot: string
@@ -52,7 +52,7 @@ export default class HalsonConfigurator extends Configurator {
 	 *         root resource link map.
 	 */
 	getConfiguration() {
-		let {url, data, options} = this._prepareResourceLinksRequest();
+		let { url, data, options } = this._prepareResourceLinksRequest();
 		return this._httpAgent.get(url, data, options).then((response) => {
 			let config = response.body;
 			config._apiRoot = this._apiRoot;
