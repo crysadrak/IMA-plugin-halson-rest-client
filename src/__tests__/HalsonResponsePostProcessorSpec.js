@@ -1,8 +1,8 @@
 
 import AbstractHalsonEntity from '../AbstractHalsonEntity';
 import HalsonResponsePostProcessor from '../HalsonResponsePostProcessor';
-import Request from 'ima-plugin-rest-client/dist/Request';
-import Response from 'ima-plugin-rest-client/dist/Response';
+import { Request } from '@ima/plugin-rest-client/dist/Request';
+import { Response } from '@ima/plugin-rest-client/dist/Response';
 
 describe('HalsonResponsePostProcessor', () => {
 

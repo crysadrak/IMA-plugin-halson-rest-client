@@ -1,6 +1,6 @@
 
 import halson from 'halson';
-import Response from 'ima-plugin-rest-client/dist/Response';
+import { Response } from '@ima/plugin-rest-client/dist/Response';
 import ResponsePostProcessor
 		from 'ima-plugin-rest-client/dist/ResponsePostProcessor';
 

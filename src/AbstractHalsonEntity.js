@@ -1,5 +1,5 @@
 
-import AbstractEntity from 'ima-plugin-rest-client/dist/AbstractEntity';
+import { AbstractEntity } from '@ima/plugin-rest-client/dist/AbstractEntity';
 
 /**
  * Private field symbols.

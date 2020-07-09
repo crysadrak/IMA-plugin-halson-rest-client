@@ -1,5 +1,5 @@
 
-import Configurator from 'ima-plugin-rest-client/dist/Configurator';
+import { Configurator } from '@ima/plugin-rest-client/dist/Configurator';
 
 /**
  * Configurator for the HAL+JSON REST API client configurator.
