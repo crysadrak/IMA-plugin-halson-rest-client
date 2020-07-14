@@ -1,5 +1,5 @@
 
-import { LinkGenerator } from '@ima/plugin-rest-client/dist/LinkGenerator';
+import { LinkGenerator } from '@ima/plugin-rest-client';
 import uriTemplateParser from 'uri-template';
 
 /**

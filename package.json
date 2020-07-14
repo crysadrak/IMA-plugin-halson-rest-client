@@ -19,7 +19,7 @@
 		"prepublish": "echo '====================================================================================================================================================\nUse \"npm run publish-package\" to publish this package, or \"npm install --ignore-scripts\" to install local dependencies. This will be fixed in npm 4.\n====================================================================================================================================================' && exit 1",
 		"publish-package": "npm run build && npm run test && npm publish dist --ignore-scripts",
 		"build": "node node_modules/gulp/bin/gulp.js build",
-		"test": "node node_modules/gulp/bin/gulp.js test"
+		"test": "node_modules/.bin/jest --config jest/jest.conf.js"
 	},
 	"repository": {
 		"type": "git",
@@ -39,15 +39,26 @@
 	"devDependencies": {
 		"@babel/core": "7.6.4",
 		"@babel/plugin-transform-modules-commonjs": "7.6.0",
+		"@babel/preset-env": "^7.10.4",
 		"@babel/preset-react": "7.6.3",
 		"@ima/core": "17.6.0",
 		"babel-eslint": "10.1.0",
 		"babel-plugin-ima-logger": "3.0.1",
 		"del": "5.1.0",
+		"enzyme": "^3.11.0",
+		"enzyme-adapter-react-16": "^1.15.2",
+		"enzyme-to-json": "^3.5.0",
 		"eslint": "7.4.0",
 		"gulp": "4.0.2",
 		"gulp-babel": "8.0.0",
-		"gulp-jasmine": "4.0.0"
+		"jest": "26.1.0",
+		"react": "16.13.1",
+		"react-dom": "16.13.1",
+		"to-fast-properties": "^3.0.1",
+		"to-mock": "^1.6.2"
+	},
+	"peerDependencies": {
+		"@ima/core": "17.6.0"
 	},
 	"browserify": {
 		"transform": [

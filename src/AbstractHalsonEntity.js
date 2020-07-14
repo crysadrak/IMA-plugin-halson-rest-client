@@ -1,5 +1,5 @@
 
-import { AbstractEntity } from '@ima/plugin-rest-client/dist/AbstractEntity';
+import { AbstractEntity } from '@ima/plugin-rest-client';
 
 /**
  * Private field symbols.
@@ -24,7 +24,6 @@ export default class AbstractHalsonEntity extends AbstractEntity {
 	/**
 	 * Initializes the entity using the provided data.
 	 *
-	 * @param {HalsonRestClient} restClient REST API client.
 	 * @param {Object<string, *>} data Entity data, which will be directly
 	 *        assigned to the entity's fields.
 	 * @param {?AbstractHalsonEntity=} parentEntity The entity within which the
@@ -32,8 +31,8 @@ export default class AbstractHalsonEntity extends AbstractEntity {
 	 *        {@code null} if this entity belongs to a top-level resource
 	 *        without a parent.
 	 */
-	constructor(restClient, data, parentEntity = null) {
-		super(restClient, data, parentEntity);
+	constructor(data, parentEntity = null) {
+		super(data, parentEntity);
 
 		if (!this._links) {
 			this._links = {};

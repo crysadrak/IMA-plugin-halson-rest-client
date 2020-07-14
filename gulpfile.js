@@ -1,7 +1,6 @@
 let del = require('del');
 let gulp = require('gulp');
 let babel = require('gulp-babel');
-let jasmine = require('gulp-jasmine');
 
 exports.build = gulp.series(
 	clean,
@@ -19,7 +18,8 @@ function buildJs() {
 				moduleIds: true,
 				presets: ['@babel/react'],
 				plugins: ['@babel/plugin-transform-modules-commonjs']
-			}))
+			})
+		)
 		.pipe(gulp.dest('./dist'));
 }
 
@@ -31,13 +31,6 @@ function copy() {
 
 function clean() {
 	return del('./dist');
-}
-
-exports.test = test;
-function test() {
-	return gulp
-		.src('./src/**/*Spec.js')
-		.pipe(jasmine({ includeStackTrace: true }));
 }
 
 exports.dev = dev;
